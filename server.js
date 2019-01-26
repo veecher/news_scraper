@@ -14,7 +14,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost/news-scraper-db", { useNewUrlParser: true });
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+// mongoose.connect("mongodb://localhost/news-scraper-db", { useNewUrlParser: true });
 
 app.get("/scrape", function(req, res) {
   axios.get("http://old.reddit.com/").then(function(response) {
